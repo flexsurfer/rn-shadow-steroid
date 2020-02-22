@@ -141,7 +141,7 @@ re-frame navigation events `steroid.rn.navigation.events`
                 :component tabs-comp}]]])})
 ```
 
-Note! `create-mount-handler` and `nav-ref-handler` should be used togather
+Note! `create-mount-handler` and `nav-ref-handler` should be used together
 
 After you require `steroid.rn.navigation.events` once, re-frame events are registered and you can use them for navigation
 
