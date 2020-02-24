@@ -10,7 +10,7 @@
 (defmacro register-reload-comp [name app-root]
   (let [props (gensym "props")]
     `(.registerComponent
-      steroid.rn/app-registry
+      steroid.rn.core/app-registry
       ~name
       #(reagent.core/reactify-component
         (fn [~props]
