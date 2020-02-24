@@ -120,7 +120,7 @@ React Navigation with HOT RELOAD
                     :options   {:gestureEnabled false}}]]]])))
 
 (defn init []
-  (rn/register-comp "bestrestrn" root-stack))
+  (rn/register-comp "app-name" root-stack))
 ```
 
 Notice that we register root-stack without hot reload but screens components are reloadable. **Also it's important to create components outside renderer function**
