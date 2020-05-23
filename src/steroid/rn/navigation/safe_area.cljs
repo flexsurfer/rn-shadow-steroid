@@ -1,10 +1,8 @@
 (ns steroid.rn.navigation.safe-area
-  (:require ["react-native-safe-area-context" :refer [SafeAreaProvider SafeAreaView]]
+  (:require ["react-native-safe-area-context"
+             :refer (SafeAreaView SafeAreaProvider SafeAreaConsumer)]
             [reagent.core :as reagent]))
 
-(defn- adapt-class [class]
-  (when class
-    (reagent/adapt-react-class class)))
-
-(def safe-area-provider (adapt-class SafeAreaProvider))
-(def safe-area-view (adapt-class SafeAreaView))
+(def safe-area-provider (reagent/adapt-react-class SafeAreaProvider))
+(def safe-area-consumer (reagent/adapt-react-class SafeAreaConsumer))
+(def safe-area-view (reagent/adapt-react-class SafeAreaView))

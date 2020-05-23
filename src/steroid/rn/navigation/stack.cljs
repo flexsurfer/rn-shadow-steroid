@@ -1,11 +1,14 @@
 (ns steroid.rn.navigation.stack
   (:require ["@react-navigation/stack" :refer [createStackNavigator]]
-            [reagent.core :as reagent]))
-
-(defn- adapt-class [class]
-  (when class
-    (reagent/adapt-react-class class)))
+            [reagent.core :as reagent]
+            [steroid.rn.core :as rn]
+            [steroid.rn.utils :as utils]))
 
 (defn create-stack-navigator []
-  (let [stack (createStackNavigator)]
-    [(adapt-class (.-Navigator stack)) (adapt-class (.-Screen stack))]))
+  (let [^js stack (createStackNavigator)]
+    [(reagent/adapt-react-class (.-Navigator stack))
+     (reagent/adapt-react-class (.-Screen stack))]))
+
+(defn stack [& params]
+  (let [[navigator screen] (create-stack-navigator)]
+    (utils/prepare-navigator navigator screen)))

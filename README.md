@@ -2,12 +2,14 @@
 
 A Clojure library with a few functions-steroids for react native app, **can be used only with shadow-cljs**
 
+![IMG](screencast.gif)
+
 [![Clojars](https://img.shields.io/clojars/v/rn-shadow-steroid.svg)](https://clojars.org/rn-shadow-steroid)
 
 ## Usage
 
 ```clojure
-{:dependencies [[rn-shadow-steroid "0.1.1"]]}
+{:dependencies [[rn-shadow-steroid "0.2.1"]]}
 ```
 
 Register root reagent component in app registry
@@ -40,23 +42,87 @@ shadow-cljs.edn
 ```clojure
 {:source-paths ["src"]
 
- :dependencies [[rn-shadow-steroid "0.1.1"]]
+ :dependencies [[rn-shadow-steroid "0.2.1"]]
 
  :builds       {:dev
                 {:target     :react-native
                  :init-fn    app.core/init
                  :output-dir "app"
-                 :devtools   {:autoload true
-                              :after-load steroid.rn.core/reload}}}}
+                 :devtools   {:after-load steroid.rn.core/reload
+                              :build-notify steroid.rn.core/build-notify}}}}
 ```
 
 Now each time you change your code it will be hot reloaded keeping an app state. **NOTE react native fast refresh should be turned off**
 
 
-React Native components
+###React Native components
+
+#### Basic components
+```clojure
+[steroid.rn.core :as rn]
+rn/app-registry rn/view rn/text rn/image rn/text-input rn/scroll-view
+```
+
+#### UI components
+```clojure
+[steroid.rn.components.ui :as ui]
+rn/button rn/switch
+```
+
+#### Touchable components
+```clojure
+[steroid.rn.components.touchable :as touchable]
+touchable/touchable-highlight touchable/touchable-native-feedback touchable/touchable-opacity touchable/touchable-without-feedback
+```
+
+#### List components
+```clojure
+[steroid.rn.components.list :as list]
+list/flat-list list/section-list
+```
+
+#### Other components
+```clojure
+[steroid.rn.components.other :as other]
+other/activity-indicator other/alert other/dimensions other/keyboard-avoiding-view other/modal other/refresh-control other/status-bar
+```
+
+#### Picker component
+````bash
+yarn add @react-native-community/picker
+````
 
 ```clojure
-(:require [steroid.rn.core :as rn])
+[steroid.rn.components.picker :as picker]
+picker/picker picker/item
+```
+
+#### DateTimePicker component
+````bash
+yarn add @react-native-community/datetimepicker
+````
+
+```clojure
+[steroid.rn.components.datetimepicker :as datetimepicker]
+datetimepicker/date-time-picker
+```
+
+#### Async storage component
+````bash
+yarn add @react-native-community/async-storage
+````
+
+```clojure
+[steroid.rn.components.async-storage :as async-storage]
+(async-storage/set-item "key" {:my-value "value"})
+(async-storage/get-item "key" #(println "value" %))
+```
+     
+#### EXAMPLE
+
+```clojure
+(:require [steroid.rn.core :as rn]
+          [steroid.rn.components.list :as list])
 
 (defn item-render [{:keys [title image-url description]}]
   [rn/touchable-opacity {:on-press #(do "smth")}
@@ -73,81 +139,101 @@ React Native components
     [rn/view {:style {:flex 1 :background-color :white}}
      [rn/text {:style {:font-size 22 :align-self :center :margin 10 :font-family "Inter"}}
       "MyApp"]
-     [rn/flat-list {:data data-vector :render-fn item-render}]])
+     [list/flat-list {:data data-vector :render-fn item-render}]])
 ```
+ 
+### React Navigation with HOT RELOAD
 
-All components
-```clojure
-activity-indicator, button, image, image-background, input-accessory-view, modal, picker, refresh-control
-safe-area-view, scroll-view, section-list, status-bar, switch, text, text-input, toolbar-android
-touchable-highlight, touchable-native-feedback, touchable-opacity, touchable-without-feedback
-view, virtualized-list, flat-list, app-registry
-```
-
-React Navigation with HOT RELOAD
+#### Navigation container component
+````bash
+yarn add @react-navigation/native
+````
 
 ```clojure
-(:require [steroid.rn.core :as rn]
+[steroid.rn.navigation.core :as rnn]
+rnn/navigation-container
+rnn/create-navigation-container-reload
+```
+
+#### Stack components
+````bash
+yarn add @react-navigation/stack
+````
+
+```clojure
+[steroid.rn.navigation.stack :as stack]
+stack/stack
+```
+
+#### Bottom tabs components
+````bash
+yarn add @react-navigation/bottom-tabs
+````
+
+```clojure
+[steroid.rn.navigation.bottom-tabs :as bottom-tabs]
+bottom-tabs/bottom-tab
+```
+
+#### Safe area components
+````bash
+yarn add react-native-safe-area-context
+````
+
+```clojure
+[steroid.rn.navigation.safe-area :as safe-area]
+safe-area/safe-area-provider safe-area/safe-area-consumer safe-area/safe-area-view
+```
+
+#### EXAMPLE
+
+````bash
+`yarn add @react-navigation/native @react-navigation/stack @react-navigation/bottom-tab react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view`
+
+`cd ios; pod install; cd ..`
+````
+
+```clojure
+  (:require [steroid.rn.core :as rn]
+            [re-frame.core :as re-frame]
             [steroid.rn.navigation.core :as rnn]
-            [steroid.rn.navigation.safe-area :as safe-area]
-            [steroid.rn.navigation.bottom-tabs :as bottom-tabs]
             [steroid.rn.navigation.stack :as stack]
-            [app.modal.views :as modal.views]
-            [app.home.views :as home.vews]
-            [app.map.views :as map.views])
+            [steroid.rn.navigation.bottom-tabs :as bottom-tabs]
+            [clojurernproject.views :as screens]
+            [steroid.rn.navigation.safe-area :as safe-area]
+            steroid.rn.navigation.events))
 
-(defn tabs-screen []
-  (let [[navigator screen] (bottom-tabs/create-bottom-tab-navigator)
-        home-comp (rn/reload-comp home.vews/home)
-        map-comp (rn/reload-comp map.views/map-view)]
-    (fn []
-      [navigator
-       [screen {:name "Home" :component home-comp}]
-       [screen {:name "Map" :component map-comp}]])))
+(defn main-screens []
+  [bottom-tabs/bottom-tab
+   [{:name      :home
+     :component screens/home-screen}
+    {:name      :basic
+     :component screens/basic-screen}]])
 
 (defn root-stack []
-  (let [[navigator screen] (stack/create-stack-navigator)
-          tabs-comp (rn/react-comp tabs-screen)
-          modal-comp (rn/reload-comp moadl.views/modal)]
-    (fn []
-        [safe-area/safe-area-provider
-         [rnn/navigation-container
-          [navigator {:mode :modal :headerMode :none}
-           [screen {:name      :main
-                    :component tabs-comp}]
-           [screen {:name      :modal
-                    :component modal-comp
-                    :options   {:gestureEnabled false}}]]]])))
+  [safe-area/safe-area-provider
+   [(rnn/create-navigation-container-reload
+     {:on-ready #(re-frame/dispatch [:init-app-db])}
+     [stack/stack {:mode :modal :header-mode :none}
+      [{:name      :main
+        :component main-screens}
+       {:name      :modal
+        :component screens/modal-screen}]])]])
 
 (defn init []
-  (rn/register-comp "app-name" root-stack))
+  (rn/register-comp "ClojureRNProject" root-stack))
 ```
 
-Notice that we register root-stack without hot reload but screens components are reloadable. **Also it's important to create components outside renderer function**
+Notice that we register root-stack without hot reload but create navigation-container-reload.
 
-re-frame navigation events `steroid.rn.navigation.events`
+#### re-frame navigation events `steroid.rn.navigation.events`
 
-```clojure
-(:require steroid.rn.navigation.events
-          [steroid.rn.navigation.core :as rnn])
-
-(reagent/create-class
- {:component-did-mount (rnn/create-mount-handler #(dispatch [:init-app]))
-  :reagent-render
-  (fn []
-    [rnn/navigation-container {:ref rnn/nav-ref-handler}
-      [navigator {:mode :modal :headerMode :none}
-       [screen {:name      :main
-                :component tabs-comp}]]])})
-```
-
-Note! `create-mount-handler` and `nav-ref-handler` should be used together
-
-After you require `steroid.rn.navigation.events` once, re-frame events are registered and you can use them for navigation
+After `steroid.rn.navigation.events` has been required once, re-frame events are registered and you can use them for navigation
 
 `(re-frame/dispatch [:navigate-to :modal])`
 
-`(re-frame/dispatch [:navigate-back])`
+`(re-frame/dispatch [:navigate-to :basic])`
 
+`(re-frame/dispatch [:navigate-back])`
 
 ENJOY!

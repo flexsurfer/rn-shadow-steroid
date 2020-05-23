@@ -4,7 +4,8 @@
   (let [props (gensym "props")]
     `(reagent.core/reactify-component
       (fn [~props]
-        @steroid.rn.core/cnt
+        (when steroid.rn.core/debug?
+          @steroid.rn.core/cnt)
         [~comp ~props]))))
 
 (defmacro register-reload-comp [name app-root]
@@ -14,5 +15,9 @@
       ~name
       #(reagent.core/reactify-component
         (fn [~props]
-          @steroid.rn.core/cnt
-          [~app-root ~props])))))
+          (when steroid.rn.core/debug?
+            @steroid.rn.core/cnt)
+          [steroid.rn.core/view {:style {:flex 1}}
+           [~app-root ~props]
+           (when steroid.rn.core/debug?
+             [steroid.rn.core/reload-view])])))))

@@ -1,11 +1,13 @@
 (ns steroid.rn.navigation.bottom-tabs
-  (:require ["@react-navigation/bottom-tabs" :refer [createBottomTabNavigator]]
-            [reagent.core :as reagent]))
-
-(defn adapt-class [class]
-  (when class
-    (reagent/adapt-react-class class)))
+  (:require ["@react-navigation/bottom-tabs" :refer (createBottomTabNavigator)]
+            [reagent.core :as reagent]
+            [steroid.rn.utils :as utils]))
 
 (defn create-bottom-tab-navigator []
-  (let [tab (createBottomTabNavigator)]
-    [(adapt-class (.-Navigator tab)) (adapt-class (.-Screen tab))]))
+  (let [^js tab (createBottomTabNavigator)]
+    [(reagent/adapt-react-class (.-Navigator tab))
+     (reagent/adapt-react-class (.-Screen tab))]))
+
+(defn bottom-tab [& params]
+   (let [[navigator screen] (create-bottom-tab-navigator)]
+     (utils/prepare-navigator navigator screen)))
