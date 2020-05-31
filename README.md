@@ -9,7 +9,7 @@ A Clojure library with a few functions-steroids for react native app, **can be u
 ## Usage
 
 ```clojure
-{:dependencies [[rn-shadow-steroid "0.2.1"]]}
+{:dependencies [[rn-shadow-steroid "0.2.2"]]}
 ```
 
 Register root reagent component in app registry
@@ -42,7 +42,7 @@ shadow-cljs.edn
 ```clojure
 {:source-paths ["src"]
 
- :dependencies [[rn-shadow-steroid "0.2.1"]]
+ :dependencies [[rn-shadow-steroid "0.2.2"]]
 
  :builds       {:dev
                 {:target     :react-native
@@ -116,6 +116,9 @@ yarn add @react-native-community/async-storage
 [steroid.rn.components.async-storage :as async-storage]
 (async-storage/set-item "key" {:my-value "value"})
 (async-storage/get-item "key" #(println "value" %))
+(async-storage/remove-item "key")
+(async-storage/get-all-keys #(println "keys" %))
+(async-storage/clear)
 ```
      
 #### EXAMPLE
