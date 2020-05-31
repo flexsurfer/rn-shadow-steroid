@@ -1,4 +1,4 @@
-(defproject rn-shadow-steroid "0.2.1"
+(defproject rn-shadow-steroid "0.2.2"
   :description "React Native with shadow-cljs on steroids"
   :url "https://github.com/flexsurfer/rn-shadow-steroid"
   :license {:name "Eclipse Public License"

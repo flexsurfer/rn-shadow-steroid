@@ -9,3 +9,22 @@
   (.. AsyncStorage
       (getItem key)
       (then #(cb (utils/deserialize %)))))
+
+(defn get-all-keys [cb]
+  (.. AsyncStorage
+      (getAllKeys)
+      (then #(cb (js->clj %)))))
+
+(defn remove-item
+  ([key] (remove-item key #()))
+  ([key cb]
+   (.. AsyncStorage
+       (removeItem key)
+       (then #(cb)))))
+
+(defn clear
+  ([] (clear #()))
+  ([cb]
+   (.. AsyncStorage
+       (clear)
+       (then #(cb)))))
