@@ -9,7 +9,7 @@ A Clojure library with a few functions-steroids for react native app, **can be u
 ## Usage
 
 ```clojure
-{:dependencies [[rn-shadow-steroid "0.2.4"]]}
+{:dependencies [[rn-shadow-steroid "0.2.5"]]}
 ```
 
 Register root reagent component in app registry
@@ -42,7 +42,7 @@ shadow-cljs.edn
 ```clojure
 {:source-paths ["src"]
 
- :dependencies [[rn-shadow-steroid "0.2.4"]]
+ :dependencies [[rn-shadow-steroid "0.2.5"]]
 
  :builds       {:dev
                 {:target     :react-native
