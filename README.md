@@ -9,7 +9,7 @@ A Clojure library with a few functions-steroids for react native app, **can be u
 ## Usage
 
 ```clojure
-{:dependencies [[rn-shadow-steroid "0.2.5"]]}
+{:dependencies [[rn-shadow-steroid "0.2.6"]]}
 ```
 
 Register root reagent component in app registry
@@ -42,7 +42,7 @@ shadow-cljs.edn
 ```clojure
 {:source-paths ["src"]
 
- :dependencies [[rn-shadow-steroid "0.2.5"]]
+ :dependencies [[rn-shadow-steroid "0.2.6"]]
 
  :builds       {:dev
                 {:target     :react-native
@@ -90,7 +90,17 @@ platform/platform platform/os platform/version platform/android? platform/ios?
 #### Other components
 ```clojure
 [steroid.rn.components.other :as other]
-other/activity-indicator other/alert other/dimensions other/keyboard-avoiding-view other/modal other/refresh-control other/status-bar
+other/activity-indicator other/alert other/dimensions other/keyboard-avoiding-view other/modal other/refresh-control 
+```
+
+#### StatusBar components
+```clojure
+[steroid.rn.components.status-bar :as status-bar]
+(status-bar/set-bar-style bar-style)
+(status-bar/set-background-color background-color)
+(status-bar/set-hidden hidden)
+(status-bar/set-network-activity-indicator-visible network-activity-indicator-visible)
+(status-bar/set-translucent translucent)
 ```
 
 #### Picker component

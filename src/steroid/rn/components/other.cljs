@@ -8,4 +8,3 @@
 (def keyboard-avoiding-view (reagent/adapt-react-class rn/KeyboardAvoidingView))
 (def modal (reagent/adapt-react-class rn/Modal))
 (def refresh-control (reagent/adapt-react-class rn/RefreshControl))
-(def status-bar (reagent/adapt-react-class rn/StatusBar))
