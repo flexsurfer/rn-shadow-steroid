@@ -7,13 +7,13 @@
  :navigate-to
  (fn [view]
    (when @core/nav-ref
-     (.navigate @core/nav-ref view))))
+     (.navigate ^js @core/nav-ref view))))
 
 (re-frame/reg-fx
  :navigate-back
  (fn []
    (when @core/nav-ref
-     (.goBack @core/nav-ref))))
+     (.goBack ^js @core/nav-ref))))
 
 (fx/defn navigate-to
    {:events [:navigate-to]}
