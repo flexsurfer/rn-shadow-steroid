@@ -16,18 +16,18 @@
   [{:keys [key-fn keyExtractor key-extractor
            render-fn renderItem render-item
            empty-component ListEmptyComponent list-empty-component
-           header ListHeaderComponent lList-header-component
+           header ListHeaderComponent list-header-component
            footer ListFooterComponent list-footer-component
            separator ItemSeparatorComponent item-separator-component]}]
   (merge (let [key-fn (or key-fn keyExtractor key-extractor)]
-           {:keyExtractor (if key-fn (wrap-key-fn key-fn) (fn [data index] (str index)))})
+           {:keyExtractor (if key-fn (wrap-key-fn key-fn) (fn [_ index] (str index)))})
          (when-let [render-fn (or render-fn renderItem render-item)]
            {:renderItem (wrap-render-fn render-fn)})
          (when-let [separator (or separator ItemSeparatorComponent item-separator-component)]
            {:ItemSeparatorComponent (fn [] (reagent/as-element separator))})
          (when-let [empty-component (or empty-component ListEmptyComponent list-empty-component)]
            {:ListEmptyComponent (fn [] (reagent/as-element empty-component))})
-         (when-let [header (or header ListHeaderComponent lList-header-component)]
+         (when-let [header (or header ListHeaderComponent list-header-component)]
            {:ListHeaderComponent (reagent/as-element header)})
          (when-let [footer (or footer ListFooterComponent list-footer-component)]
            {:ListFooterComponent (reagent/as-element footer)})))
