@@ -3,6 +3,7 @@
   (:require ["react-native" :as rn]
             [reagent.core :as reagent]
             [steroid.rn.components.basic :as basic]
+            [steroid.rn.components.touchable :as touchable]
             [steroid.rn.reloader :as reloader]))
 
 (def debug? ^boolean js/goog.DEBUG)
@@ -14,6 +15,11 @@
 (def image basic/image)
 (def text-input basic/text-input)
 (def scroll-view basic/scroll-view)
+
+(def touchable-highlight touchable/touchable-highlight)
+(def touchable-native-feedback touchable/touchable-native-feedback)
+(def touchable-opacity touchable/touchable-opacity)
+(def touchable-without-feedback touchable/touchable-without-feedback)
 
 (def reload-view reloader/reload-view)
 

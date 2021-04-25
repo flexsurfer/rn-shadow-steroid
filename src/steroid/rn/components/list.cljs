@@ -3,9 +3,9 @@
             [steroid.rn.components.basic :as basic]
             ["react-native" :as rn]))
 
-(defn- wrap-render-fn [f]
+(defn- wrap-render-fn [f render-data]
   (fn [^js data]
-    (reagent/as-element (f (.-item data) (.-index data) (.-separators data)))))
+    (reagent/as-element [f (.-item data) (.-index data) (.-separators data) render-data])))
 
 (defn- wrap-key-fn [f]
   (fn [data index]
@@ -18,11 +18,11 @@
            empty-component ListEmptyComponent list-empty-component
            header ListHeaderComponent list-header-component
            footer ListFooterComponent list-footer-component
-           separator ItemSeparatorComponent item-separator-component]}]
+           separator ItemSeparatorComponent item-separator-component render-data]}]
   (merge (let [key-fn (or key-fn keyExtractor key-extractor)]
            {:keyExtractor (if key-fn (wrap-key-fn key-fn) (fn [_ index] (str index)))})
          (when-let [render-fn (or render-fn renderItem render-item)]
-           {:renderItem (wrap-render-fn render-fn)})
+           {:renderItem (wrap-render-fn render-fn render-data)})
          (when-let [separator (or separator ItemSeparatorComponent item-separator-component)]
            {:ItemSeparatorComponent (fn [] (reagent/as-element separator))})
          (when-let [empty-component (or empty-component ListEmptyComponent list-empty-component)]
@@ -57,7 +57,7 @@
 (defn- wrap-per-section-render-fn [props]
   (update
    (if-let [f (:render-fn props)]
-     (assoc (dissoc props :render-fn) :renderItem (wrap-render-fn f))
+     (assoc (dissoc props :render-fn) :renderItem (wrap-render-fn f (:render-data props)))
      props)
    :data to-array))
 

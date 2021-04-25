@@ -9,7 +9,7 @@ A Clojure library with a few functions-steroids for react native app, **can be u
 ## Usage
 
 ```clojure
-{:dependencies [[rn-shadow-steroid "0.2.6"]]}
+{:dependencies [[rn-shadow-steroid "0.2.8"]]}
 ```
 
 Register root reagent component in app registry
@@ -55,24 +55,19 @@ shadow-cljs.edn
 Now each time you change your code it will be hot reloaded keeping an app state. **NOTE react native fast refresh should be turned off**
 
 
-###React Native components
+### React Native components
 
 #### Basic components
 ```clojure
 [steroid.rn.core :as rn]
 rn/app-registry rn/view rn/text rn/image rn/text-input rn/scroll-view
+rn/touchable-highlight rn/touchable-native-feedback rn/touchable-opacity rn/touchable-without-feedback
 ```
 
 #### UI components
 ```clojure
 [steroid.rn.components.ui :as ui]
-rn/button rn/switch
-```
-
-#### Touchable components
-```clojure
-[steroid.rn.components.touchable :as touchable]
-touchable/touchable-highlight touchable/touchable-native-feedback touchable/touchable-opacity touchable/touchable-without-feedback
+ui/button ui/switch
 ```
 
 #### List components
