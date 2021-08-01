@@ -10,7 +10,7 @@
 (defonce timeout (atom false))
 (defonce label (reagent/atom ""))
 
-(defn build-competed []
+(defn build-completed []
   (reset! label "reloading")
   (reset! warning? false)
   (reset! visible true))
@@ -76,4 +76,4 @@
             (and (= :build-complete type) (seq (:warnings info))))
         (build-failed (:warnings info))
         (= :build-complete type)
-        (build-competed)))
+        (build-completed)))
