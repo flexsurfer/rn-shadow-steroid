@@ -100,7 +100,7 @@ other/activity-indicator other/alert other/dimensions other/keyboard-avoiding-vi
 
 #### Picker component
 ````bash
-yarn add @react-native-community/picker
+yarn add @react-native-picker/picker
 ````
 
 ```clojure
@@ -120,7 +120,7 @@ datetimepicker/date-time-picker
 
 #### Async storage component
 ````bash
-yarn add @react-native-community/async-storage
+yarn add @react-native-async-storage/async-storage
 ````
 
 ```clojure
@@ -202,7 +202,7 @@ safe-area/safe-area-provider safe-area/safe-area-consumer safe-area/safe-area-vi
 #### EXAMPLE
 
 ````bash
-`yarn add @react-navigation/native @react-navigation/stack @react-navigation/bottom-tab react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view`
+`yarn add @react-navigation/native @react-navigation/stack @react-navigation/bottom-tab react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-masked-view/masked-view`
 
 `cd ios; pod install; cd ..`
 ````

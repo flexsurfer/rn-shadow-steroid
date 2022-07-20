@@ -1,5 +1,5 @@
 (ns steroid.rn.components.async-storage
-  (:require ["@react-native-community/async-storage" :default AsyncStorage]
+  (:require ["@react-native-async-storage/async-storage" :default AsyncStorage]
             [steroid.rn.utils :as utils]))
 
 (defn set-item [key value]
