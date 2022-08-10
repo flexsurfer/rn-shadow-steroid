@@ -131,7 +131,30 @@ yarn add @react-native-async-storage/async-storage
 (async-storage/get-all-keys #(println "keys" %))
 (async-storage/clear)
 ```
-     
+
+### Vector icons
+````bash
+yarn add @expo/vector-icons
+````
+
+```clojure
+(ns my-ns
+  (:require [steroid.rn.core :as rn]
+            [steroid.rn.components.vector-icons :as vi]))
+
+(defn my-component []
+  (let []
+    [rn/scroll-view {:style styles/layout}
+     [vi/icon {:name :md-checkmark-circle
+               :color :green
+               :size  24}]
+
+     [vi/button {:name :facebook
+                 :background-color :#3b5998
+                 :on-press #(prn "facebook")}
+      "Log in with Facebook"]]))
+```
+
 #### EXAMPLE
 
 ```clojure
